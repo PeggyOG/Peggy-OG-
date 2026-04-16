@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIBLOBLO | Aggregator Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #007BFF;
+            --accent: #00f2ff;
+            --bg-dark: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION PRO --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            backdrop-filter: blur(15px);
+            background: rgba(5, 5, 5, 0.8);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* LOGO KIBLOBLO STYLISÉ */
+        .kiblo-logo {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 22px;
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+        }
+
+        .logo-text { font-weight: 800; font-size: 1.6rem; letter-spacing: -1px; }
+
+        nav a {
+            text-decoration: none;
+            color: #888;
+            margin-left: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav a:hover, nav a.active { color: var(--primary); }
+
+        /* --- SECTION PARTENAIRES (SPO, YT, TK) --- */
+        .partners-bar {
+            padding: 25px 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            border-bottom: 1px solid #111;
+        }
+
+        .partner-item {
+            font-weight: 700;
+            color: #444;
+            transition: 0.4s;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .partner-item:hover { color: var(--text-main); transform: scale(1.1); text-shadow: 0 0 10px var(--primary); }
+
+        /* --- ACCUEIL ENRICHI --- */
+        .container { padding: 40px 6%; }
+
+        .hero-banner {
+            background: linear-gradient(260deg, #001a33 0%, #050505 100%);
+            border-radius: 24px;
+            padding: 60px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::after {
+            content: ''; position: absolute; top: -50%; right: -10%; width: 400px; height: 400px;
+            background: var(--primary); filter: blur(150px); opacity: 0.2;
+        }
+
+        .grid-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card-opt {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 20px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .card-opt:hover { background: rgba(255,255,255,0.06); border-color: var(--primary); }
+
+        .icon-box { width: 50px; height: 50px; background: #111; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 24px; }
+
+        /* --- FORMULAIRE PROFESSIONNEL --- */
+        .form-upload {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #0a0a0a;
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid #222;
+        }
+
+        input, select {
+            background: #151515;
+            border: 1px solid #333;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .btn-pro {
+            background: var(--primary);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 14px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(0,123,255,0.3);
+        }
+
+        .btn-pro:hover { background: #0056b3; }
+
+        /* --- FOOTER --- */
+        footer { padding: 40px; text-align: center; color: #444; font-size: 0.8rem; border-top: 1px solid #111; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="kiblo-logo">K</div>
+            <div class="logo-text">KIBLO<span>BLO</span></div>
+        </div>
+        <nav>
+            <a onclick="switchPage('home')" id="nav-home" class="active">Vue d'ensemble</a>
+            <a onclick="switchPage('distribute')">Distribuer</a>
+            <a onclick="switchPage('analytics')">Audience</a>
+            <a onclick="switchPage('finance')">Revenus</a>
+        </nav>
+    </header>
+
+    <div class="partners-bar">
+        <div class="partner-item">SPOTIFY</div>
+        <div class="partner-item">YOUTUBE MUSIC</div>
+        <div class="partner-item">TIKTOK</div>
+        <div class="partner-item">DEEZER</div>
+        <div class="partner-item">APPLE MUSIC</div>
+    </div>
+
+    <main id="page-home" class="container">
+        <div class="hero-banner">
+            <h1 style="font-size: 2.5rem; margin: 0;">Salut, Artiste ! 🎤</h1>
+            <p style="color: #aaa; margin: 10px 0 30px;">Votre musique a généré <strong>+15% d'écoute</strong> cette semaine.</p>
+            <button class="btn-pro" style="width: auto;" onclick="switchPage('distribute')">+ Créer une nouvelle sortie</button>
+        </div>
+
+        <div class="grid-options">
+            <div class="card-opt">
+                <div class="icon-box">📊</div>
+                <h3>Tendance Live</h3>
+                <p style="font-size: 0.9rem; color: #777;">Suivez vos streams sur Spotify et Apple Music en temps réel.</p>
+            </div>
+            <div class="card-opt">
+                <div class="icon-box">💰</div>
+                <h3>Portefeuille</h3>
+                <p style="font-size: 0.9rem; color: #777;">Retirez vos gains via Mobile Money, Virement ou PayPal (Seuil : 5 000 FCFA).</p>
+            </div>
+            <div class="card-opt">
+                <div class="icon-box">🛡️</div>
+                <h3>Protection ID</h3>
+                <p style="font-size: 0.9rem; color: #777;">Vérifiez vos empreintes numériques et activez le Content ID.</p>
+            </div>
+            <div class="card-opt">
+                <div class="icon-box">🌍</div>
+                <h3>KIBLO-Ads</h3>
+                <p style="font-size: 0.9rem; color: #777;">Propulsez votre chanson en haut des playlists partenaires.</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="page-distribute" class="container" style="display:none;">
+        <div class="form-upload">
+            <h2 style="text-align:center; margin-bottom:40px;">Configuration de la Sortie</h2>
+            <form id="mainForm">
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                    <div>
+                        <label>Nom de l'œuvre</label>
+                        <input type="text" placeholder="Ex: Horizon" required>
+                    </div>
+                    <div>
+                        <label>Genre</label>
+                        <select>
+                            <option>Afrobeat</option>
+                            <option>Amapiano</option>
+                            <option>Rap / Hip-Hop</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div style="margin-top:20px;">
+                    <label>Fichier Audio (Master WAV/MP3)</label>
+                    <input type="file" required>
+                </div>
+
+                <div style="margin-top:20px; background: #111; padding:20px; border-radius:15px; border: 1px dashed #333;">
+                    <h4 style="margin:0 0 10px 0;">Options Backend Python Activees :</h4>
+                    <label><input type="checkbox" checked> Génération automatique du code ISRC</label><br>
+                    <label><input type="checkbox" checked> Nettoyage du bruit audio via IA</label><br>
+                    <label><input type="checkbox" checked> Envoi vers OneRPM Simulation API</label>
+                </div>
+
+                <button type="submit" class="btn-pro">LANCER LA DISTRIBUTION MONDIALE</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>KIBLOBLO Distribution Pro &copy; 2026 | Powered by Python Logic</p>
+    </footer>
+
+    <script>
+        // Gestion de la navigation fluide
+        function switchPage(page) {
+            document.querySelectorAll('main').forEach(m => m.style.display = 'none');
+            document.getElementById('page-' + page).style.display = 'block';
+            
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            // Note: simple simulation pour l'UI
+        }
+
+        // Connexion simulée au Backend Python
+        document.getElementById('mainForm').onsubmit = function(e) {
+            e.preventDefault();
+            alert("Connexion au serveur Python KIBLOBLO...\n1. Analyse audio terminée.\n2. Métadonnées validées.\n3. Livraison aux partenaires en cours !");
+            switchPage('home');
+        }
+    </script>
+</body>
+</html>
